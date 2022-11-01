@@ -20,4 +20,12 @@ class Election
     end
     vote_counts_total
   end
+
+  def winners
+    @races.map do |race|
+      next if race.open?
+      next if race.tie?
+      race.winner_as_candidate
+    end.compact
+  end
 end
