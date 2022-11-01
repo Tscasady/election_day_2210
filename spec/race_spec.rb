@@ -81,4 +81,16 @@ describe Race do
       expect(race.tie?).to eq true
     end
   end
+
+  describe '#winner_as_candidate' do
+    it 'returns a candidate object associated with a winner name' do
+      race = Race.new('Texas Governor')
+      candidate1 = race.register_candidate!({name: "Diana D", party: :democrat})
+      candidate2 = race.register_candidate!({name: "Roberto R", party: :republican})
+      4.times {candidate1.vote_for!}
+      4.times {candidate2.vote_for!}
+      race.close!
+      expect(race.winner_as_candidate).to eq candidate1
+    end
+  end
 end
