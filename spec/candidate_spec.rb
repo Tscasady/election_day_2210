@@ -1,7 +1,5 @@
 require './lib/candidate'
 
-let(:candidate){Candidate.new({name: 'Diana D', party: :democrat})}
-
 describe Candidate do
 
   let(:candidate){Candidate.new({name: 'Diana D', party: :democrat})}
