@@ -26,7 +26,7 @@ describe Race do
     end
   end
 
-  descirbe '#open?' do
+  describe '#open?' do
     it 'returns a boolean indicating whether the race is open or not' do
       race = Race.new('Texas Governor')
       expect(race.open?).to be true
@@ -35,7 +35,7 @@ describe Race do
     end
   end
 
-  descirbe 'close!' do
+  describe 'close!' do
     it 'closes the race' do
       race = Race.new('Texas Governor')
       expect(race.open?).to be true
@@ -44,11 +44,11 @@ describe Race do
     end
   end
 
-  descirbe 'winner' do
+  describe 'winner' do
     it 'returns false if the race is open, otherwise returns candidate with the most votes' do
       race = Race.new('Texas Governor')
-      candidate1 = race1.register_candidate!({name: "Diana D", party: :democrat})
-      candidate2 = race1.register_candidate!({name: "Roberto R", party: :republican})
+      candidate1 = race.register_candidate!({name: "Diana D", party: :democrat})
+      candidate2 = race.register_candidate!({name: "Roberto R", party: :republican})
       4.times {candidate1.vote_for!}
       1.times {candidate2.vote_for!}
       expect(race.winner).to eq false
@@ -58,8 +58,8 @@ describe Race do
 
     it 'can return any of the highest voted candidates in case of a tie' do
       race = Race.new('Texas Governor')
-      candidate1 = race1.register_candidate!({name: "Diana D", party: :democrat})
-      candidate2 = race1.register_candidate!({name: "Roberto R", party: :republican})
+      candidate1 = race.register_candidate!({name: "Diana D", party: :democrat})
+      candidate2 = race.register_candidate!({name: "Roberto R", party: :republican})
       4.times {candidate1.vote_for!}
       4.times {candidate2.vote_for!}
       race.close!
@@ -67,14 +67,17 @@ describe Race do
     end
   end
 
-  descirbe 'tie?' do
+  describe 'tie?' do
     it 'returns a boolean indicating whether or not two or more candidates received the highest number of votes' do
       race = Race.new('Texas Governor')
-      candidate1 = race1.register_candidate!({name: "Diana D", party: :democrat})
-      candidate2 = race1.register_candidate!({name: "Roberto R", party: :republican})
+      candidate1 = race.register_candidate!({name: "Diana D", party: :democrat})
+      candidate2 = race.register_candidate!({name: "Roberto R", party: :republican})
       4.times {candidate1.vote_for!}
-      4.times {candidate2.vote_for!}
-      race.close!
+      1.times {candidate2.vote_for!}
+      
+      expect(race.tie?).to eq false
+      
+      3.times {candidate2.vote_for!}
       expect(race.tie?).to eq true
     end
   end
