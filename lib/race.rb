@@ -34,6 +34,12 @@ class Race
     total_votes.max_by{|name, votes| votes}[0]
   end
 
+  def winner_as_candidate
+    candidates.find do |candidate| 
+      candidate.name == winner
+    end
+  end
+
   def tie?
     total_votes.values != total_votes.values.uniq
   end
