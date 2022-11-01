@@ -1,18 +1,21 @@
-require './lib/eleciton'
+require './lib/election'
+require './lib/race'
+require './lib/candidate'
+
 
 describe Election do
-  let(:eleciton) { Election.new('2022') }
+  let(:election) { Election.new('2022') }
 
   let(:race1) { Race.new("Virginia District 4 Representative") }
   let(:race2) { Race.new("Texas Governor") }
 
   describe '#intialize' do
     it 'exists' do
-      expect(eleciton).to be_a Election
+      expect(election).to be_a Election
     end
 
     it 'has readable attributes' do
-      expect(eleciton.year).to eq '2022'
+      expect(election.year).to eq '2022'
       expect(election.races).to eq []
       expect(election.candidates).to eq []
     end
@@ -20,16 +23,16 @@ describe Election do
 
   describe '#add_race' do
     it 'can add a race to its races array' do
-      eleciton.add_race(race1)
-      eleciton.add_race(race2)
-      expect(eleciton.races).to eq [race1, race2]
+      election.add_race(race1)
+      election.add_race(race2)
+      expect(election.races).to eq [race1, race2]
     end
   end
 
   describe '#vote_counts' do
     it 'returns a hash with each candidate vote count' do
-      eleciton.add_race(race1)
-      eleciton.add_race(race2)
+      election.add_race(race1)
+      election.add_race(race2)
       candidate1 = race1.register_candidate!({name: "Diana D", party: :democrat})
       candidate2 = race1.register_candidate!({name: "Roberto R", party: :republican})
       candidate3 = race2.register_candidate!({name: "Diego D", party: :democrat})
@@ -42,7 +45,7 @@ describe Election do
       6.times {candidate4.vote_for!}
       6.times {candidate5.vote_for!}
 
-      expect(eleciton.vote_counts).to eq { "Diana D" => 4, "Roberto R"=>1, "Diego D"=>10, "Rita R"=>6, "Ida I"=>6}
+      expect(election.vote_counts).to be == {'Diana D' => 4, 'Diego D' => 10, 'Ida I' => 6, 'Rita R' => 6, 'Roberto R' => 1}
     end
   end
 end
